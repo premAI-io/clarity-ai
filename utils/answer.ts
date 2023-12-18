@@ -12,7 +12,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
     },
     method: "POST",
     body: JSON.stringify({
-      model: OpenAIModel.DAVINCI_TURBO,
+      model: process.env.NEXT_PUBLIC_MODEL || OpenAIModel.DAVINCI_TURBO,
       messages: [
         { role: "system", content: "You are a helpful assistant that accurately answers the user's queries based on the given text." },
         { role: "user", content: prompt }
