@@ -30,10 +30,15 @@ const searchHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
       const href = $(link).attr("href");
 
       if (href && href.startsWith("/url?q=")) {
-        const cleanedHref = href.replace("/url?q=", "").split("&")[0];
+        try {
+          const cleanedHref = href.replace("/url?q=", "").split("&")[0];
+          const url = new URL(cleanedHref);
 
-        if (!links.includes(cleanedHref)) {
-          links.push(cleanedHref);
+          if (!links.includes(cleanedHref) && url.hostname !== "") {
+            links.push(cleanedHref);
+          }
+        } catch (ignore) {
+          return
         }
       }
     });
